@@ -1,7 +1,9 @@
-import React from 'react'
 import HeroSection from './components/HeroSection';
+import { useProductContext } from './context/productcontex';
 
 const About = () => {
+
+  const name = useProductContext();
 
   const data = {
     name: "Smart Ecommerce",
@@ -9,7 +11,11 @@ const About = () => {
   }
 
   return (
-    <HeroSection props={data}/>
+    <>
+      {name.myName}
+      {name.surName}
+      <HeroSection props={data} />
+    </>
   )
 }
 
