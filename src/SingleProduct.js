@@ -109,6 +109,12 @@ const Wrapper = styled.section`
   .container {
     padding: 9rem 0;
   }
+
+  .product_images {
+    display: flex;
+    align-items: center;
+  }
+  
   .product-data {
     display: flex;
     flex-direction: column;
