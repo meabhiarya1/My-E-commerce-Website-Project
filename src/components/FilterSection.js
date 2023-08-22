@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useFilterContext } from '../context/filter_context';
-
+import { FaCheck } from "react-icons/fa";
 
 const FilterSection = () => {
 
   const {
-    filters: { text, category },
+    filters: { text, category, color },
     updateFilterValue,
     all_products
   } = useFilterContext();
@@ -17,13 +17,19 @@ const FilterSection = () => {
       return curElem[attr];
     });
 
+    if (attr === "colors") {
+      // return (newVal = ["All", ...new Set([].concat(...newVal))]);
+      newVal = newVal.flat();
+    }
+
     return (newVal = ["all", ...new Set(newVal)]);
   };
 
   //WE NEED UNIQUE DATA
 
-  const categoryData = getUniqueData(all_products, 'category');
+  const categoryData = getUniqueData(all_products, "category");
   const companyData = getUniqueData(all_products, 'company');
+  const colorsData = getUniqueData(all_products, 'colors');
 
   return (
     <Wrapper>
@@ -40,6 +46,7 @@ const FilterSection = () => {
 
       <div className="filter-category">
         <h3>Category</h3>
+
         <div>
           {categoryData.map((curElem, index) => {
             return (
@@ -48,6 +55,7 @@ const FilterSection = () => {
                 type="button"
                 name="category"
                 value={curElem}
+                className={curElem === category ? "active" : ""}
                 onClick={updateFilterValue}>
                 {curElem}
               </button>
@@ -58,6 +66,7 @@ const FilterSection = () => {
 
       <div className="filter-company">
         <h3>Company</h3>
+
         <form action="#">
           <select
             name="company"
@@ -73,6 +82,43 @@ const FilterSection = () => {
             })}
           </select>
         </form>
+      </div>
+
+      <div className="filter-colors colors">
+        <h3>Colors</h3>
+
+        <div className="filter-color-style">
+          {colorsData.map((curColor, index) => {
+
+            if (curColor === 'all') {
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  value={curColor}
+                  name="color"
+                  // style={{ backgroundColor: curColor }}
+                  className="color-all--style"
+                  onClick={updateFilterValue}>
+                  All
+                </button>
+              );
+            }
+
+            return (
+              <button
+                key={index}
+                type="button"
+                value={curColor}
+                name="color"
+                style={{ backgroundColor: curColor }}
+                className={color === curColor ? "btnStyle active" : "btnStyle"}
+                onClick={updateFilterValue}>
+                {color === curColor ? <FaCheck className="checkStyle active" /> : null}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
     </Wrapper>
