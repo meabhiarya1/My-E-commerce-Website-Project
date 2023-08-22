@@ -1,17 +1,56 @@
 import styled from "styled-components";
-import {useFilterContext} from '../context/filter_context';
+import { useFilterContext } from '../context/filter_context';
 
 
 const FilterSection = () => {
 
-  const {filters:{text},updateFilterValue} = useFilterContext();
+  const { 
+    filters: { text, category }, 
+    all_products, 
+    updateFilterValue 
+  } = useFilterContext();
+
+  //TO GT THE UNIQUE DATA OF EACH FIELDS
+
+  const getUniqueData = (data, property) => {
+    let newVal = data.map((curElem) => {
+      return curElem[property];
+    });
+
+    return (newVal = ["All", ...new Set(newVal)]);
+  };
+
+  //WE NEED UNIQUE DATA
+
+  const categoryOnlyData = getUniqueData(all_products, 'category');
 
   return (
     <Wrapper>
       <div className="filter-search">
         <form onSubmit={(e) => { e.preventDefault() }}>
-          <input type="name" name="text" value={text} onChange={updateFilterValue} />
+          <input
+            type="name"
+            name="text"
+            value={text}
+            onChange={updateFilterValue}
+            placeholder="Search" />
         </form>
+      </div>
+
+      <div className="filter-category">
+        <h3>Category</h3>
+        <div>
+          {categoryOnlyData.map((curElem, index) => {
+            return <button
+              key={index}
+              type="button"
+              name="category"
+              value={curElem}
+              onClick={updateFilterValue}>
+                {curElem}
+            </button>
+          })}
+        </div>
       </div>
     </Wrapper>
   )
