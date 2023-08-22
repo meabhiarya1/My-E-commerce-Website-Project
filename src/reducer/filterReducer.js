@@ -1,8 +1,5 @@
-import { all } from "axios";
-
 const filterReducer = (state, action) => {
     switch (action.type) {
-
         case "LOAD_FILTER_PRODUCTS":
             return {
                 ...state,
@@ -16,7 +13,6 @@ const filterReducer = (state, action) => {
                 grid_view: true,
             };
 
-
         case "SET_LIST_VIEW":
             return {
                 ...state,
@@ -24,6 +20,8 @@ const filterReducer = (state, action) => {
             };
 
         case "GET_SORT_VALUE":
+            // let userSortValue = document.getElementById("sort");
+            // let sort_value = userSortValue.options[userSortValue.selectedIndex].value;
             return {
                 ...state,
                 sorting_value: action.payload,
@@ -31,11 +29,12 @@ const filterReducer = (state, action) => {
 
         case "SORTING_PRODUCTS":
             let newSortData;
+            // let tempSortProduct = [...action.payload];
+
             const { filter_products, sorting_value } = state;
             let tempSortProduct = [...filter_products];
 
             const sortingProducts = (a, b) => {
-                console.log(sorting_value)
                 if (sorting_value === "lowest") {
                     return a.price - b.price;
                 }
@@ -68,14 +67,14 @@ const filterReducer = (state, action) => {
                 filters: {
                     ...state.filters,
                     [name]: value,
-                }
-            }
+                },
+            };
 
         case "FILTER_PRODUCTS":
             let { all_products } = state;
             let tempFilterProduct = [...all_products];
 
-            const { text, category } = state.filters;
+            const { text, category, company, color } = state.filters;
 
             if (text) {
                 tempFilterProduct = tempFilterProduct.filter((curElem) => {
@@ -83,20 +82,31 @@ const filterReducer = (state, action) => {
                 });
             }
 
-            if (category) {
-                tempFilterProduct = tempFilterProduct.filter((curElem) => {
-                    return curElem.category === category;
-                });
+            if (category !== "all") {
+                tempFilterProduct = tempFilterProduct.filter(
+                    (curElem) => curElem.category === category
+                );
             }
 
+            if (company !== "all") {
+                tempFilterProduct = tempFilterProduct.filter(
+                    (curElem) => curElem.company.toLowerCase() === company.toLowerCase()
+                );
+            }
+
+            if (color) {
+                tempFilterProduct = tempFilterProduct.filter((curElem) =>
+                    curElem.colors.includes(color)
+                );
+            }
             return {
                 ...state,
                 filter_products: tempFilterProduct,
-            }
+            };
 
         default:
             return state;
     }
-}
+};
 
 export default filterReducer;
