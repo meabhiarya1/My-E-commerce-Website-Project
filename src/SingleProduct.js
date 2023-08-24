@@ -21,12 +21,10 @@ const SingleProduct = () => {
   const { id } = useParams();
 
   const {
-    id: alias,
     name,
     company,
     price,
     description,
-    category,
     stock,
     stars,
     reviews,
