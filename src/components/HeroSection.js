@@ -16,7 +16,7 @@ const HeroSection = ({props}) => {
             <h1>{props.name}</h1>
             <p>{props.des}</p>
               <NavLink to='/products'>
-                <Button>Shop Now</Button>
+                <Button >Shop Now</Button>
               </NavLink>
           </div>
           {/* Our homePage Image */}

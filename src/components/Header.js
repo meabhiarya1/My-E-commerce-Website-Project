@@ -22,6 +22,7 @@ const MainHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   position: relative;
+  
 
   .logo {
     height: 8rem;
