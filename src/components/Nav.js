@@ -15,7 +15,7 @@ const Nav = () => {
   const { total_item } = useCartContext();
   const { isAuthenticated } = useAuth0()
 
-  console.log(isAuthenticated)
+  // console.log(isAuthenticated)
 
 
   const Nav = styled.nav`
@@ -209,7 +209,7 @@ const Nav = () => {
 
           <li>
             {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-            <LogoutButton />
+            {/* <LogoutButton /> */}
           </li>
 
           <li>
