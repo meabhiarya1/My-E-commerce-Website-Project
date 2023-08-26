@@ -4,11 +4,19 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { useCartContext } from '../context/cart_context';
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from './Login';
+import LogoutButton from './Logout';
+
 
 const Nav = () => {
 
   const [menuIcon, setMenuIcon] = useState();
   const { total_item } = useCartContext();
+  const { isAuthenticated } = useAuth0()
+
+  console.log(isAuthenticated)
+
 
   const Nav = styled.nav`
     .navbar-lists {
@@ -191,6 +199,17 @@ const Nav = () => {
             <NavLink to='/contact'
               className="navbar-link" onClick={() => setMenuIcon(false)}>
               Contact</NavLink>
+          </li>
+
+          {/* <li>
+            <NavLink to='/userprofile'
+              className="navbar-link" onClick={() => setMenuIcon(false)}>
+              My Profile</NavLink>
+          </li> */}
+
+          <li>
+            {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+            <LogoutButton />
           </li>
 
           <li>

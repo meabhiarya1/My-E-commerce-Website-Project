@@ -12,6 +12,9 @@ import { GlobalStyle } from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import UserProfile from './components/UserProfile';
+
+
 
 function App() {
 
@@ -40,11 +43,13 @@ function App() {
     },
   };
 
+
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <GlobalStyle />
-        <Header/>
+        <Header />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
@@ -52,6 +57,8 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/singleproduct/:id' element={<SingleProduct />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/userprofile' element={<UserProfile />} />
+          {/* <Route path='/login' element={<Login />} /> */}
           <Route path='*' element={<ErrorPage />} />
         </Routes>
         <Footer />
