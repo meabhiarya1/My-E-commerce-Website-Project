@@ -15,8 +15,6 @@ import Footer from './components/Footer';
 import UserProfile from './components/UserProfile';
 
 
-
-
 function App() {
 
   const theme = {
@@ -43,8 +41,6 @@ function App() {
       tab: "998px",
     },
   };
-
-
 
   return (
     <ThemeProvider theme={theme}>
