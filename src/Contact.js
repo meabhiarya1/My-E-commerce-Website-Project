@@ -1,7 +1,12 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import React from 'react';
-import styled  from 'styled-components';
-// import { Button } from './styles/Button';
+import styled from 'styled-components';
+
+
 const Contact = () => {
+
+  const { isAuthenticated, user } = useAuth0();
+
   return (
     <Wrapper>
       <h2 className='common-heading'>Contact page</h2>
@@ -16,26 +21,28 @@ const Contact = () => {
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"></iframe>
 
-        <div className='container'>
-          <div className='contact-form'>
+      <div className='container'>
+        <div className='contact-form'>
 
-            <form className='contact-inputs' action='https://formspree.io/f/xleyjpqz' method='POST' >
+          <form className='contact-inputs' action='https://formspree.io/f/xleyjpqz' method='POST' >
 
-              <input 
-              type='text' 
-              placeholder='username' 
-              name='username' 
-              required 
+            <input
+              type='text'
+              placeholder='username'
+              name='username'
+              value={isAuthenticated ? user.name : ''}
+              required
               autoComplete='off' />
 
-              <input 
-              type='email' 
-              placeholder='Email' 
-              name='Email' 
-              required 
+            <input
+              type='email'
+              placeholder='Email'
+              name='Email'
+              value={isAuthenticated ? user.email : ''}
+              required
               autoComplete='off' />
 
-              <textarea
+            <textarea
               name="Message"
               cols="30"
               rows="10"
@@ -43,10 +50,10 @@ const Contact = () => {
               autoComplete="off"
               placeholder="Enter you message"></textarea>
 
-              <input type='submit' value='send' />
-            </form>
-          </div>
+            <input type='submit' value='send' />
+          </form>
         </div>
+      </div>
     </Wrapper>
   )
 }

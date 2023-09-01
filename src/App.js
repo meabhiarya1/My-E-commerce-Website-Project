@@ -16,6 +16,7 @@ import UserProfile from './components/UserProfile';
 
 
 
+
 function App() {
 
   const theme = {
@@ -58,7 +59,6 @@ function App() {
           <Route path='/singleproduct/:id' element={<SingleProduct />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/userprofile' element={<UserProfile />} />
-          {/* <Route path='/login' element={<Login />} /> */}
           <Route path='*' element={<ErrorPage />} />
         </Routes>
         <Footer />

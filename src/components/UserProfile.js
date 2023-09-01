@@ -2,26 +2,36 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../styles/Button';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const UserProfile = () => {
+  const { isAuthenticated, user, isLoading } = useAuth0();
+
+  // console.log(isLoading, isAuthenticated)
+
   return (
     <Wrapper>
-      <div className='container'>
-        <h2>Your User Profile</h2>
-        <div>
-          <input type='text' placeholder='New password'></input>
+      {isAuthenticated && !isLoading &&
+        <div className='container'>
+          <h3>Hey!!!! {user.name} </h3>
           <br />
           <br />
-          <NavLink to='/'>
-            <Button>Change Your Password</Button>
-          </NavLink>
-          <br />
-          <br />
-          <NavLink to='/'>
-            <Button>Go back to Home</Button>
-          </NavLink>
-        </div>
-      </div>
+          <img src={user.picture} alt={user.name} />
+          <div className='container'>
+            <input type='text' placeholder='New password'></input>
+            <br />
+            <br />
+            <NavLink to='/' className="navbar-link">
+              <Button>Change Your Password</Button>
+            </NavLink>
+            <br />
+            <br />
+            <NavLink to='/' className="navbar-link">
+              <Button>Go back to Home</Button>
+            </NavLink>
+          </div>
+        </div>}
+      {!isAuthenticated && !isLoading && alert("Please Login first !!!!!")}
     </Wrapper>
   )
 }

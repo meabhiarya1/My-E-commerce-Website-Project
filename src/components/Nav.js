@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { useCartContext } from '../context/cart_context';
-import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from './Login';
-import LogoutButton from './Logout';
+import { Button } from '../styles/Button';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 const Nav = () => {
 
   const [menuIcon, setMenuIcon] = useState();
   const { total_item } = useCartContext();
-  const { isAuthenticated } = useAuth0()
-
-  // console.log(isAuthenticated)
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
 
   const Nav = styled.nav`
@@ -201,23 +198,26 @@ const Nav = () => {
               Contact</NavLink>
           </li>
 
-          {/* <li>
-            <NavLink to='/userprofile'
-              className="navbar-link" onClick={() => setMenuIcon(false)}>
-              My Profile</NavLink>
-          </li> */}
+          {isAuthenticated && <div><NavLink to='/userprofile' className="navbar-link" onClick={() => setMenuIcon(false)}><Button >{user.name}</Button></NavLink></div>}
 
-          <li>
-            {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-            {/* <LogoutButton /> */}
-          </li>
 
-          <li>
+          {isAuthenticated ? <li>
+            <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+              Log Out
+            </Button>
+          </li> : <li>
+            <Button onClick={() => loginWithRedirect()}>Log In</Button>;
+          </li>}
+
+          {isAuthenticated ? <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" onClick={() => setMenuIcon(false)} />
               <span className='cart-total--item'>{total_item}</span>
             </NavLink>
-          </li>
+          </li> : <NavLink className="navbar-link cart-trolley--link">
+            <FiShoppingCart className="cart-trolley" onClick={()=>{alert("Please Login to Add Products to the Cart !!!! ")}} />
+            <span className='cart-total--item'>{0}</span>
+          </NavLink>}
         </ul>
 
         {/* two buttons for open and close */}
@@ -235,4 +235,4 @@ const Nav = () => {
   )
 }
 
-export default Nav
+export default Nav;

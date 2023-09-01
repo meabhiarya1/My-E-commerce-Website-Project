@@ -5,8 +5,12 @@ import CartAmountToggle from "./CartAmountToggle";
 import { NavLink } from "react-router-dom";
 import { Button } from "../styles/Button";
 import { useCartContext } from "../context/cart_context";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AddToCart = ({ product }) => {
+
+  const { isAuthenticated } = useAuth0();
+
   const { addToCart } = useCartContext();
 
   const { id, colors, stock } = product;
@@ -48,9 +52,11 @@ const AddToCart = ({ product }) => {
         setIncrease={setIncrease}
       />
 
-      <NavLink to="/cart" onClick={() => addToCart(id, color, amount, product)}>
+      {isAuthenticated ? <NavLink to="/cart" onClick={() => addToCart(id, color, amount, product)}>
         <Button className="btn">Add To Cart</Button>
-      </NavLink>
+      </NavLink>: <Button className="btn"  onClick={()=>{alert("Please Login to Add Products to the Cart !!!! ")}}>Add To Cart</Button>
+      }    
+      
     </Wrapper>
   );
 };
