@@ -212,7 +212,7 @@ const Nav = () => {
 
           {isAuthenticated ? <li>
             <NavLink to="/userprofile" className="navbar-link cart-trolley--link">
-            
+
               <CgProfile className="cart-trolley" onClick={() => setMenuIcon(false)} />
               <span className="cart-profile" onClick={() => setMenuIcon(false)} >{user.name}</span>
             </NavLink>
@@ -222,9 +222,10 @@ const Nav = () => {
           {isAuthenticated ? <li>
             <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
               Log Out
+              <span onClick={() => { total_item = 0 }} ></span>
             </Button>
           </li> : <li>
-            <Button onClick={() => loginWithRedirect()}>Log In</Button>;
+            <Button onClick={() => loginWithRedirect()}>Login</Button>
           </li>}
 
           {isAuthenticated ? <li>
