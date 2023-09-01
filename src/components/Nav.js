@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
-import { CgMenu, CgClose } from "react-icons/cg";
+import { CgMenu, CgClose, CgProfile } from "react-icons/cg";
 import { useCartContext } from '../context/cart_context';
 import { Button } from '../styles/Button';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -61,6 +61,13 @@ const Nav = () => {
       .cart-trolley {
         position: relative;
         font-size: 3.2rem;
+        
+      }
+
+      .cart-profile {
+        position: relative;
+        font-size: 1.5rem;
+        padding: 1rem;
       }
 
       .cart-total--item {
@@ -154,6 +161,11 @@ const Nav = () => {
           font-size: 5.2rem;
         }
 
+        .cart-profile {
+          position: relative;
+          font-size: 4rem;
+        }
+
         .cart-total--item {
           width: 4.2rem;
           height: 4.2rem;
@@ -198,7 +210,13 @@ const Nav = () => {
               Contact</NavLink>
           </li>
 
-          {isAuthenticated && <div><NavLink to='/userprofile' className="navbar-link" onClick={() => setMenuIcon(false)}><Button >{user.name}</Button></NavLink></div>}
+          {isAuthenticated ? <li>
+            <NavLink to="/userprofile" className="navbar-link cart-trolley--link">
+            
+              <CgProfile className="cart-trolley" onClick={() => setMenuIcon(false)} />
+              <span className="cart-profile" onClick={() => setMenuIcon(false)} >{user.name}</span>
+            </NavLink>
+          </li> : ''}
 
 
           {isAuthenticated ? <li>
@@ -215,12 +233,12 @@ const Nav = () => {
               <span className='cart-total--item'>{total_item}</span>
             </NavLink>
           </li> : <NavLink className="navbar-link cart-trolley--link">
-            <FiShoppingCart className="cart-trolley" onClick={()=>{alert("Please Login to Add Products to the Cart !!!! ")}} />
+            <FiShoppingCart className="cart-trolley" onClick={() => { alert("Please Login to Add Products to the Cart !!!! ") }} />
             <span className='cart-total--item'>{0}</span>
           </NavLink>}
         </ul>
 
-        {/* two buttons for open and close */}
+        {/* two buttons for open and close in mobile view*/}
 
         <div className='mobile-navbar-btn'>
           <CgMenu name="menu-outline" className="mobile-nav-icon"
